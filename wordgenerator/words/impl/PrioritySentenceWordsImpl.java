@@ -34,7 +34,7 @@ public class PrioritySentenceWordsImpl extends Words implements WordsLocal {
 	public PrioritySentenceWordsImpl(constructorType type) {
 		super(type);
 		library = Libraries.WORDS_V2;
-		version = "V4";
+		version = "V5";
 		word = DEFAULT_WORD;
 	}
 
@@ -174,6 +174,11 @@ public class PrioritySentenceWordsImpl extends Words implements WordsLocal {
 	@Override
 	public boolean acceptsWords() {
 		return true;
+	}
+
+	@Override
+	public String version() {
+		return super.version() + " & " + Libraries.WORDS_V3 + " [" + word + "]";
 	}
 
 	protected void addWords() {

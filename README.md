@@ -32,18 +32,17 @@ Run the java program as a console.
 Welcome to the gibberish generator.
 Select the dictionary:
 Class Names in Package wordgenerator.words.impl:
-1: SentinceWordsImpl V4 - WordsV2
-2: SpecialWordSentinceWordsImpl V4 - WordsV2 & WordsV3 Word:[gib]
+1: PrioritySentenceWordsImpl V5 - WordsV2 & WordsV3 [gib]
+2: SentenceWordsImpl V4 - WordsV2
 3: WordsImpl V1 - WordsV1
 Enter a number, help or exit to quit: 
 3
 Contains duplicate words: false
 Enter a number, help or exit to quit: 
 10
-Snazzle fuffle, wobblywump! Gibberish wobble dingleberry shenanigans zanywobble dingleflap.
+Doodle, hodgepodge hobnob zig zoodle snack zanywobble! Rigmarole quack.
 Enter a number, help or exit to quit: 
 exit
-
 ```
 
 ## Contributing
