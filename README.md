@@ -32,7 +32,7 @@ Run the java program as a console.
 Welcome to the gibberish generator.
 Select the dictionary:
 Class Names in Package wordgenerator.words.impl:
-1: PrioritySentenceWordsImpl V4 - WordsV2
+1: PrioritySentenceWordsImpl V5 - WordsV2 & WordsV3 [gib]
 2: SentenceWordsImpl V4 - WordsV2
 3: WordsImpl V1 - WordsV1
 Enter a number, help or exit to quit: 
@@ -40,11 +40,9 @@ Enter a number, help or exit to quit:
 Contains duplicate words: false
 Enter a number, help or exit to quit: 
 10
-Whatchamacallit flibberwibble zanywobble jibber, wirl-higgledy-rhubarb dingy brouhaha.
+Doodle, hodgepodge hobnob zig zoodle snack zanywobble! Rigmarole quack.
 Enter a number, help or exit to quit: 
 exit
-
-
 ```
 
 ## Contributing
