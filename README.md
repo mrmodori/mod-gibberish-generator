@@ -23,6 +23,7 @@ Mod Gibberish Generator is a java program created to generate gibberish.
 
 *  When generating words with separators, sometimes it can end with dual separators. Example: "Word!." or "Word,.".
 *  Program crashes when writing something other than a number when starting.
+*  When changing word with the in the PrioritySentinceWordsImpl you get double output.
 
 ## Usage
 
