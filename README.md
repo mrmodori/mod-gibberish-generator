@@ -2,23 +2,6 @@
 
 Mod Gibberish Generator is a java program created to generate gibberish.
 
-## TODO's
-
-*  GibberishGenerator
-    * Refactor all Strings to constants.
-    * Make sentence maker.
-    * Add speaker mode.
-    * Check error input when starting the program.
-    * Possible memory leakage in readAndProcessInput?   
-*  InputResult
-    * All the constructors only set 1 value and default on the rest, make sure that the other values are not used?
-*  Util
-    * Refactor the whole class.
-    * Could probably improve generateAndCombineWords() method.
-    * Is addWordIfNotDuplicate() needed?
-*  Impl-classes
-    * Refactor PrioritySentenceWordsImpl and SentenceWordsImpl.
-    
 ## Known Bugs
 
 *  When generating words with separators, sometimes it can end with dual separators. Example: "Word!." or "Word,.".
