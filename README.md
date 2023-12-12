@@ -4,7 +4,7 @@ Mod Gibberish Generator is a java program created to generate gibberish.
 
 ## TODO's
 
-*  PrimeSubGenerator
+*  GibberishGenerator
     * Refactor all Strings to constants.
     * Make sentence maker.
     * Add speaker mode.
