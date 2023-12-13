@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import wordgenerator.library.Libraries;
 import wordgenerator.utils.InputResult;
@@ -32,8 +30,8 @@ public class GibberishGenerator {
 			"x - Where x is any number. Uses the dictionary and generates that many words.",
 			SEPARATOR + " - Enable/Disable the use of separators.",
 			DICTIONARY + " - Brings up the menu to select a new dictionary to use.",
-			HELP + " - Brings up this help menu.",
-			WORD + " example - Adds/Replaces the word 'example' in the dictionary.", EXIT + " - Exits the program" };
+			HELP + " - Brings up this help menu.", WORD + " - Adds/Replaces the word in the dictionary.",
+			EXIT + " - Exits the program" };
 	private static final String MESSAGE_WELCOME = "Welcome to the gibberish generator.";
 
 	private static final String DICTIONARY_PACKAGE = "wordgenerator.words.impl";
@@ -41,23 +39,27 @@ public class GibberishGenerator {
 	public void init() {
 
 		// Get the scanner
-		try (Scanner scanner = new Scanner(System.in)) {
+		try (Scanner scanner = getNewScanner()) {
 
 			// Greet the user.
 			System.out.println(MESSAGE_WELCOME);
 
 			// Ask the user what words implementation to use.
-			WordsLocal words = getDictionary(scanner);
+			WordsLocal words = getDictionary();
 
 			// Inform the user if the dictionary contains duplicates.
 			System.out.println("Contains duplicate words: " + words.containsDuplicates());
 
 			// Start the loop.
-			programLoop(scanner, words);
+			programLoop(words);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Scanner getNewScanner() {
+		return new Scanner(System.in);
 	}
 
 	/**
@@ -65,7 +67,7 @@ public class GibberishGenerator {
 	 * 
 	 * @throws Exception
 	 */
-	private void programLoop(Scanner scanner, WordsLocal startingWordsLibrary) throws Exception {
+	private void programLoop(WordsLocal startingWordsLibrary) throws Exception {
 
 		WordsLocal words = startingWordsLibrary;
 		boolean separator = true;
@@ -74,7 +76,7 @@ public class GibberishGenerator {
 		for (boolean continueProgram = true; continueProgram;) {
 
 			// Ask user what to do.
-			InputResult inputResult = readAndProcessInput(scanner, MESSAGE_INPUT);
+			InputResult inputResult = readAndProcessInput(getNewScanner(), MESSAGE_INPUT);
 
 			// Process the command.
 			switch (inputResult.getType()) {
@@ -82,13 +84,13 @@ public class GibberishGenerator {
 				generateWords(words, inputResult.getNumberOfWords(), separator);
 				break;
 			case CHANGE_DICTIONARY:
-				words = getDictionary(scanner);
+				words = getDictionary();
 				break;
 			case CHANGE_SEPARATOR:
 				separator = changeSeparator(separator);
 				break;
 			case ADD_WORD:
-				words.addWord(inputResult.getString());
+				words.addWord(getWord());
 				break;
 			case HELP:
 				printHelpText();
@@ -102,6 +104,17 @@ public class GibberishGenerator {
 				break;
 			}
 		}
+	}
+
+	private String getWord() {
+		System.out.println("Enter the word to replace with.");
+		String result = null;
+		Scanner scanner = getNewScanner();
+		if (scanner.hasNext()) {
+			result = scanner.next();
+			System.out.println("Word changed to: " + result);
+		}
+		return result;
 	}
 
 	private void printHelpText() {
@@ -139,7 +152,7 @@ public class GibberishGenerator {
 		}
 	}
 
-	private WordsLocal getDictionary(Scanner scanner) throws Exception {
+	private WordsLocal getDictionary() throws Exception {
 		System.out.println("Select the dictionary:");
 
 		List<String> classNames = Util.getClassNamesInPackage(DICTIONARY_PACKAGE);
@@ -154,10 +167,15 @@ public class GibberishGenerator {
 					+ classVersion.get(classNames.get(i)));
 		}
 
-		InputResult result = readAndProcessInput(scanner, MESSAGE_INPUT);
+		InputResult result = readAndProcessInput(getNewScanner(), MESSAGE_INPUT);
 
-		return Util.createClassesInPackage(DICTIONARY_PACKAGE, classNames.get(result.getNumberOfWords() - 1),
-				constructorType.NORMAL);
+		if (result.getNumberOfWords() - 1 < classNames.size() && result.getType() == resultType.PRINT_WORDS) {
+			return Util.createClassesInPackage(DICTIONARY_PACKAGE, classNames.get(result.getNumberOfWords() - 1),
+					constructorType.NORMAL);
+		} else {
+			System.out.println(Util.surroundWithRed("Invalid input, try again."));
+			return getDictionary();
+		}
 	}
 
 	public InputResult readAndProcessInput(Scanner scanner, String message) {
@@ -173,24 +191,13 @@ public class GibberishGenerator {
 			return continueScanner(new InputResult(resultType.HELP), scanner);
 		} else if (scanner.hasNext(EXIT)) {
 			return continueScanner(new InputResult(resultType.EXIT), scanner);
+		} else if (scanner.hasNext(WORD)) {
+			return continueScanner(new InputResult(resultType.ADD_WORD), scanner);
 		} else {
-			if (scanner.hasNextLine()) {
-				String input = scanner.nextLine();
-				Matcher matcher = Pattern.compile(WORD + " (.*)").matcher(input);
-				if (matcher.find()) {
-					String result = matcher.group(1);
-					return new InputResult(resultType.ADD_WORD, result);
-				} else {
-					System.out.println("Invalid input: '" + input + "'. Expected a number or command. Type " + HELP
-							+ " for help or " + EXIT + ".");
-					return readAndProcessInput(scanner, message); // Continue looping for valid input.
-				}
-			} else {
-				String input = scanner.nextLine();
-				System.out.println("Invalid input: '" + input + "'. Expected a number or command. Type " + HELP
-						+ " for help or " + EXIT + ".");
-				return readAndProcessInput(scanner, message); // Continue looping for valid input.
-			}
+			String input = scanner.nextLine();
+			System.out.println("Invalid input: '" + input + "'. Expected a number or command. Type " + HELP
+					+ " for help or " + EXIT + ".");
+			return readAndProcessInput(scanner, message); // Continue looping for valid input.
 		}
 	}
 
