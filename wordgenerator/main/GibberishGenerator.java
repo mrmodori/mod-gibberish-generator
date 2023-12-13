@@ -169,7 +169,7 @@ public class GibberishGenerator {
 
 		InputResult result = readAndProcessInput(getNewScanner(), MESSAGE_INPUT);
 
-		if (result.getNumberOfWords() - 1 < classNames.size()) {
+		if (result.getNumberOfWords() - 1 < classNames.size() && result.getType() == resultType.PRINT_WORDS) {
 			return Util.createClassesInPackage(DICTIONARY_PACKAGE, classNames.get(result.getNumberOfWords() - 1),
 					constructorType.NORMAL);
 		} else {
