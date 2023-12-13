@@ -10,21 +10,16 @@ Mod Gibberish Generator is a java program created to generate gibberish.
 
 Run the java program as a console.
 
+When program starts, type the number of the dictionary to use.
+
 ```bash
-Welcome to the gibberish generator.
-Select the dictionary:
-Class Names in Package wordgenerator.words.impl:
-1: PrioritySentenceWordsImpl V5 - WordsV2 & WordsV3 [gib]
-2: SentenceWordsImpl V4 - WordsV2
-3: WordsImpl V1 - WordsV1
-Enter a number, help or exit to quit: 
-3
-Contains duplicate words: false
-Enter a number, help or exit to quit: 
-10
-Doodle, hodgepodge hobnob zig zoodle snack zanywobble! Rigmarole quack.
-Enter a number, help or exit to quit: 
-exit
+Here are the list of commands:
+x - Where x is any number. Uses the dictionary and generates that many words.
+sep - Enable/Disable the use of separators.
+lib - Brings up the menu to select a new dictionary to use.
+help - Brings up this help menu.
+word - Adds/Replaces the word in the dictionary.
+exit - Exits the program
 ```
 
 ## Contributing

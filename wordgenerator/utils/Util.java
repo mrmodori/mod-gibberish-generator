@@ -123,8 +123,8 @@ public class Util {
 				separators);
 	}
 
-	public static String addSeparators(List<String> inputList, int nrOfWords, SeparatorConfiguration separatorConfig,
-			List<String> separators) {
+	public static final String addSeparators(List<String> inputList, int nrOfWords,
+			SeparatorConfiguration separatorConfig, List<String> separators) {
 		Random random = new Random();
 
 		StringBuilder resultBuilder = new StringBuilder();
@@ -168,16 +168,28 @@ public class Util {
 		}
 		matcher.appendTail(stringBuffer);
 
-		return stringBuffer.toString() + ".";
+		String result = checkAndRemoveLastSeparator(stringBuffer.toString(), separators);
+
+		return result + ".";
 	}
 
-	private static String getRandomSeparator(List<String> separators) {
+	private static final String checkAndRemoveLastSeparator(String result, List<String> separators) {
+		for (String separator : separators) {
+			if (result.endsWith(separator.trim())) {
+				return result.substring(0, result.length() - separator.trim().length());
+			}
+		}
+		return result;
+	}
+
+	private static final String getRandomSeparator(List<String> separators) {
 		List<String> shuffledSeparators = new ArrayList<>(separators);
 		Collections.shuffle(separators);
 		return shuffledSeparators.get(0);
 	}
 
-	public static Map<String, String> getClassVersion(String packageName, List<String> classNames) throws Exception {
+	public static final Map<String, String> getClassVersion(String packageName, List<String> classNames)
+			throws Exception {
 		Map<String, String> result = new LinkedHashMap<>();
 		for (String name : classNames) {
 			result.put(name, createClassesInPackage(packageName, name, constructorType.VERSION).version());
