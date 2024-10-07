@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class Libraries {
 
+	private Libraries() {
+		// No construction allowed.
+	}
+
 	public static final String SEPARATORS_V1 = "SeparatorsV1";
 	public static final String COMMASPEARATOR = "CommaSpearator";
 	public static final String SPACESEPARATOR = "SpaceSeparator";

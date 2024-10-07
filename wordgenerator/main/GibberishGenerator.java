@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import wordgenerator.library.Libraries;
+import wordgenerator.utils.ConsolePrinter;
 import wordgenerator.utils.InputResult;
 import wordgenerator.utils.SeparatorConfiguration;
 import wordgenerator.utils.Util;
@@ -26,7 +27,7 @@ public class GibberishGenerator {
 	private static final String WORD = "word";
 
 	private static final String MESSAGE_INPUT = "Enter a number, help or exit to quit: ";
-	private static final String MESSAGE_HELP[] = { "Here are the list of commands:",
+	private static final String[] MESSAGE_HELP = { "Here are the list of commands:",
 			"x - Where x is any number. Uses the dictionary and generates that many words.",
 			SEPARATOR + " - Enable/Disable the use of separators.",
 			DICTIONARY + " - Brings up the menu to select a new dictionary to use.",
@@ -42,13 +43,13 @@ public class GibberishGenerator {
 		try (Scanner scanner = getNewScanner()) {
 
 			// Greet the user.
-			System.out.println(MESSAGE_WELCOME);
+			ConsolePrinter.print(MESSAGE_WELCOME);
 
 			// Ask the user what words implementation to use.
 			WordsLocal words = getDictionary();
 
 			// Inform the user if the dictionary contains duplicates.
-			System.out.println("Contains duplicate words: " + words.containsDuplicates());
+			ConsolePrinter.println("Contains duplicate words: " + words.containsDuplicates());
 
 			// Start the loop.
 			programLoop(words);
@@ -99,7 +100,7 @@ public class GibberishGenerator {
 				continueProgram = false;
 				break;
 			default:
-				System.out.println("Not implemented: " + inputResult.getType());
+				ConsolePrinter.println("Not implemented: " + inputResult.getType());
 				continueProgram = false;
 				break;
 			}
@@ -107,25 +108,25 @@ public class GibberishGenerator {
 	}
 
 	private String getWord() {
-		System.out.println("Enter the word to replace with.");
+		ConsolePrinter.println("Enter the word to replace with.");
 		String result = null;
 		Scanner scanner = getNewScanner();
 		if (scanner.hasNext()) {
 			result = scanner.next();
-			System.out.println("Word changed to: " + result);
+			ConsolePrinter.println("Word changed to: " + result);
 		}
 		return result;
 	}
 
 	private void printHelpText() {
 		for (String helpText : MESSAGE_HELP) {
-			System.out.println(Util.surroundWithGreen(helpText));
+			ConsolePrinter.println(Util.surroundWithGreen(helpText));
 		}
 	}
 
 	private boolean changeSeparator(boolean separator) {
 		String result = (!separator ? Util.surroundWithGreen("On") : Util.surroundWithRed("Off"));
-		System.out.println("Switching the separator to be: " + result);
+		ConsolePrinter.println("Switching the separator to be: " + result);
 		return !separator;
 	}
 
@@ -141,7 +142,7 @@ public class GibberishGenerator {
 		String result = Util.addSeparators(words.getWords(numberOfWordsToPrint - 1), numberOfWordsToPrint,
 				new SeparatorConfiguration(4, 3, 20), separators);
 
-		System.out.println(Character.toUpperCase(result.charAt(0)) + result.substring(1));
+		ConsolePrinter.println(Character.toUpperCase(result.charAt(0)) + result.substring(1));
 	}
 
 	private List<String> getSeparators(boolean separator) {
@@ -153,7 +154,7 @@ public class GibberishGenerator {
 	}
 
 	private WordsLocal getDictionary() throws Exception {
-		System.out.println("Select the dictionary:");
+		ConsolePrinter.println("Select the dictionary:");
 
 		List<String> classNames = Util.getClassNamesInPackage(DICTIONARY_PACKAGE);
 		Map<String, String> classVersion = Util.getClassVersion(DICTIONARY_PACKAGE, classNames);
