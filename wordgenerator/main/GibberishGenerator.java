@@ -11,7 +11,7 @@ import wordgenerator.utils.ConsolePrinter;
 import wordgenerator.utils.InputResult;
 import wordgenerator.utils.SeparatorConfiguration;
 import wordgenerator.utils.Util;
-import wordgenerator.utils.resultType;
+import wordgenerator.utils.ResultType;
 import wordgenerator.words.Words.constructorType;
 import wordgenerator.words.WordsLocal;
 
@@ -170,7 +170,7 @@ public class GibberishGenerator {
 
 		InputResult result = readAndProcessInput(getNewScanner(), MESSAGE_INPUT);
 
-		if (result.getNumberOfWords() - 1 < classNames.size() && result.getType() == resultType.PRINT_WORDS) {
+		if (result.getNumberOfWords() - 1 < classNames.size() && result.getType() == ResultType.PRINT_WORDS) {
 			return Util.createClassesInPackage(DICTIONARY_PACKAGE, classNames.get(result.getNumberOfWords() - 1),
 					constructorType.NORMAL);
 		} else {
@@ -183,17 +183,17 @@ public class GibberishGenerator {
 		System.out.println(message);
 		if (scanner.hasNextInt()) {
 			int number = scanner.nextInt();
-			return new InputResult(resultType.PRINT_WORDS, number);
+			return new InputResult(ResultType.PRINT_WORDS, number);
 		} else if (scanner.hasNext(SEPARATOR)) {
-			return continueScanner(new InputResult(resultType.CHANGE_SEPARATOR), scanner);
+			return continueScanner(new InputResult(ResultType.CHANGE_SEPARATOR), scanner);
 		} else if (scanner.hasNext(DICTIONARY)) {
-			return continueScanner(new InputResult(resultType.CHANGE_DICTIONARY), scanner);
+			return continueScanner(new InputResult(ResultType.CHANGE_DICTIONARY), scanner);
 		} else if (scanner.hasNext(HELP)) {
-			return continueScanner(new InputResult(resultType.HELP), scanner);
+			return continueScanner(new InputResult(ResultType.HELP), scanner);
 		} else if (scanner.hasNext(EXIT)) {
-			return continueScanner(new InputResult(resultType.EXIT), scanner);
+			return continueScanner(new InputResult(ResultType.EXIT), scanner);
 		} else if (scanner.hasNext(WORD)) {
-			return continueScanner(new InputResult(resultType.ADD_WORD), scanner);
+			return continueScanner(new InputResult(ResultType.ADD_WORD), scanner);
 		} else {
 			String input = scanner.nextLine();
 			System.out.println("Invalid input: '" + input + "'. Expected a number or command. Type " + HELP

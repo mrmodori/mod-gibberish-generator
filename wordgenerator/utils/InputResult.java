@@ -5,35 +5,35 @@ package wordgenerator.utils;
  */
 public class InputResult {
 
-	resultType type;
+	ResultType type;
 	int intResult = 0;
 	String stringResult = "";
 	boolean booleanResult = true;
 
-	public InputResult(resultType type) {
+	public InputResult(ResultType type) {
 		this(type, 0, "", true);
 	}
 
-	public InputResult(resultType type, String stringResult) {
+	public InputResult(ResultType type, String stringResult) {
 		this(type, 0, stringResult, true);
 	}
 
-	public InputResult(resultType type, boolean booleanResult) {
+	public InputResult(ResultType type, boolean booleanResult) {
 		this(type, 0, "", booleanResult);
 	}
 
-	public InputResult(resultType type, int intResult) {
+	public InputResult(ResultType type, int intResult) {
 		this(type, intResult, "", true);
 	}
 
-	private InputResult(resultType type, int intResult, String stringResult, boolean booleanResult) {
+	private InputResult(ResultType type, int intResult, String stringResult, boolean booleanResult) {
 		this.type = type;
 		this.intResult = intResult;
 		this.stringResult = stringResult;
 		this.booleanResult = booleanResult;
 	}
 
-	public resultType getType() {
+	public ResultType getType() {
 		return type;
 	}
 
